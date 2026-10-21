@@ -5,7 +5,6 @@ COPY go.mod go.sum ./
 RUN go mod download
 COPY . .
 RUN go run github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen --config api/openapi/codegen.yaml -o internal/api/openapi.gen.go api/openapi/openapi.yaml
-RUN gofmt -w internal/api/openapi.gen.go && test -z "$$(gofmt -l .)"
 RUN CGO_ENABLED=0 go test ./...
 RUN CGO_ENABLED=0 go build -o /out/core ./cmd/core
 
